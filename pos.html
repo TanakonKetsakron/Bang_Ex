@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Bang EX — ระบบออกใบสั่งงาน</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Sarabun:wght@300;400;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="pos.css">
+</head>
+<body>
+
+<!-- TOP BAR -->
+<div class="topbar">
+  <a class="topbar-logo" href="index.html"><span>❄</span> BANG EX — ออกใบสั่งงาน</a>
+  <div class="topbar-right">
+    <div class="cashier-info"><div class="cashier-dot"></div><span>เจ้าหน้าที่: สาขาลาดกระบัง</span></div>
+    <div class="topbar-clock" id="clock">--:--:--</div>
+    <a class="topbar-back" href="index.html">← หน้าหลัก</a>
+  </div>
+</div>
+
+<div class="pos-layout">
+
+  <!-- ========== LEFT: JOB BUILDER ========== -->
+  <div class="left-panel">
+    <div class="panel-header">
+      <div class="panel-title">สร้างใบสั่งงาน</div>
+      <div class="order-id">JOB #BEX-<span id="jobId">00001</span></div>
+    </div>
+
+    <div class="cat-tabs">
+      <button class="cat-tab active" data-step="1" onclick="goStep(1,this)">① ลูกค้า</button>
+      <button class="cat-tab" data-step="2" onclick="goStep(2,this)">② รถ &amp; บริการ</button>
+      <button class="cat-tab" data-step="3" onclick="goStep(3,this)">③ เส้นทาง</button>
+      <button class="cat-tab" data-step="4" onclick="goStep(4,this)">④ สรุป</button>
+    </div>
+
+    <!-- STEP 1 -->
+    <div class="step-panel" id="step1">
+      <div class="step-body">
+        <div class="field-group">
+          <div class="field-label">ชื่อบริษัท / ลูกค้า <span class="req">*</span></div>
+          <input class="field-input" id="cName" placeholder="เช่น บริษัท ซีพี ออลล์ จำกัด" />
+        </div>
+        <div class="field-row2">
+          <div class="field-group">
+            <div class="field-label">เบอร์ติดต่อ <span class="req">*</span></div>
+            <input class="field-input" id="cPhone" placeholder="08X-XXX-XXXX" type="tel" />
+          </div>
+          <div class="field-group">
+            <div class="field-label">LINE / อีเมล</div>
+            <input class="field-input" id="cEmail" placeholder="@bangex" />
+          </div>
+        </div>
+        <div class="field-group">
+          <div class="field-label">ประเภทลูกค้า</div>
+          <div class="chip-group" id="cTypeGroup">
+            <button class="chip active" onclick="setChip('cTypeGroup','cType',this,'นิติบุคคล')">🏢 นิติบุคคล</button>
+            <button class="chip" onclick="setChip('cTypeGroup','cType',this,'บุคคลธรรมดา')">👤 บุคคล</button>
+            <button class="chip" onclick="setChip('cTypeGroup','cType',this,'Contract รายเดือน')">📋 Contract</button>
+          </div>
+          <input type="hidden" id="cType" value="นิติบุคคล" />
+        </div>
+        <div class="field-group">
+          <div class="field-label">หมายเหตุ</div>
+          <textarea class="field-input field-ta" id="cNote" placeholder="ต้องการใบกำกับภาษี, สินค้าบอบบาง..."></textarea>
+        </div>
+      </div>
+      <div class="step-footer">
+        <button class="btn-next" onclick="goStep(2,stepTab(2))">ถัดไป: เลือกรถ →</button>
+      </div>
+    </div>
+
+    <!-- STEP 2 -->
+    <div class="step-panel hidden" id="step2">
+      <div class="step-body">
+        <div class="field-group">
+          <div class="field-label">ประเภทรถขนส่ง <span class="req">*</span></div>
+          <div class="truck-grid" id="truckGrid"></div>
+        </div>
+        <div class="field-group">
+          <div class="field-label">ระบบอุณหภูมิ</div>
+          <div class="chip-group" id="tempGroup">
+            <button class="chip active" onclick="setChip('tempGroup','tempMode',this,'ห้องเย็น -18°C')">❄ -18°C (แช่แข็ง)</button>
+            <button class="chip" onclick="setChip('tempGroup','tempMode',this,'แช่เย็น 2-8°C')">🌡 2-8°C (แช่เย็น)</button>
+            <button class="chip" onclick="setChip('tempGroup','tempMode',this,'อุณหภูมิห้อง')">📦 อุณหภูมิห้อง</button>
+          </div>
+          <input type="hidden" id="tempMode" value="ห้องเย็น -18°C" />
+        </div>
+        <div class="field-group">
+          <div class="field-label">จำนวนชั่วโมงใช้งาน <span class="req">*</span></div>
+          <div class="hour-row">
+            <button class="hour-btn" onclick="adjustHours(-1)">−</button>
+            <div class="hour-display"><span id="hoursNum">4</span><span class="hour-unit">ชม.</span></div>
+            <button class="hour-btn" onclick="adjustHours(1)">+</button>
+            <div class="hour-preset">
+              <button class="hour-pre-btn" onclick="setHours(2)">2</button>
+              <button class="hour-pre-btn" onclick="setHours(4)">4</button>
+              <button class="hour-pre-btn" onclick="setHours(8)">8</button>
+              <button class="hour-pre-btn" onclick="setHours(12)">12</button>
+              <button class="hour-pre-btn" onclick="setHours(24)">24</button>
+            </div>
+          </div>
+        </div>
+        <div class="field-group">
+          <div class="field-label">บริการเสริม (เลือกได้หลายอย่าง)</div>
+          <div class="addon-list" id="addonList"></div>
+        </div>
+      </div>
+      <div class="step-footer two">
+        <button class="btn-back" onclick="goStep(1,stepTab(1))">← กลับ</button>
+        <button class="btn-next" onclick="goStep(3,stepTab(3))">ถัดไป: เส้นทาง →</button>
+      </div>
+    </div>
+
+    <!-- STEP 3 -->
+    <div class="step-panel hidden" id="step3">
+      <div class="step-body">
+        <div class="field-group">
+          <div class="field-label">📍 ต้นทาง — จุดรับสินค้า <span class="req">*</span></div>
+          <input class="field-input" id="originAddr" placeholder="ที่อยู่ / ชื่อสถานที่" oninput="updateSummary()" />
+          <div class="map-pin-row">
+            <button class="pin-btn" onclick="openMap('origin')">🗺 ปักหมุดบนแผนที่</button>
+            <span class="pin-status" id="originPinStatus">ยังไม่ได้ปักหมุด</span>
+          </div>
+        </div>
+
+        <div class="field-group">
+          <div class="field-label">🏁 ปลายทาง — จุดส่งสินค้า <span class="req">*</span></div>
+          <input class="field-input" id="destAddr" placeholder="ที่อยู่ / ชื่อสถานที่" oninput="updateSummary()" />
+          <div class="map-pin-row">
+            <button class="pin-btn" onclick="openMap('dest')">🗺 ปักหมุดบนแผนที่</button>
+            <span class="pin-status" id="destPinStatus">ยังไม่ได้ปักหมุด</span>
+          </div>
+        </div>
+
+        <!-- MINI MAP -->
+        <div class="map-mock" id="mapMock">
+          <div class="map-mock-bg"></div>
+          <div class="map-mock-grid"></div>
+          <svg class="map-route-svg" viewBox="0 0 100 60" preserveAspectRatio="none">
+            <path id="routePath" d="M15,30 Q50,10 85,30" stroke="#D0021B" stroke-width="1.5" fill="none" stroke-dasharray="4,3" opacity="0.5"/>
+          </svg>
+          <div class="map-pin-a" id="pinA">📍</div>
+          <div class="map-pin-b" id="pinB">🏁</div>
+          <div class="map-distance-badge" id="distBadge"><span id="distKm">—</span> กม.</div>
+          <div class="map-mock-overlay">
+            <span id="mapHint">กดปักหมุดเพื่อเลือกตำแหน่ง</span>
+          </div>
+        </div>
+
+        <div class="field-row2">
+          <div class="field-group">
+            <div class="field-label">📅 วันที่รับสินค้า <span class="req">*</span></div>
+            <input class="field-input" id="pickDate" type="date" oninput="updateSummary()" />
+          </div>
+          <div class="field-group">
+            <div class="field-label">⏰ เวลารับสินค้า <span class="req">*</span></div>
+            <input class="field-input" id="pickTime" type="time" oninput="updateSummary()" />
+          </div>
+        </div>
+      </div>
+      <div class="step-footer two">
+        <button class="btn-back" onclick="goStep(2,stepTab(2))">← กลับ</button>
+        <button class="btn-next" onclick="goStep(4,stepTab(4))">ถัดไป: สรุป →</button>
+      </div>
+    </div>
+
+    <!-- STEP 4 -->
+    <div class="step-panel hidden" id="step4">
+      <div class="step-body">
+        <div class="summary-box" id="summaryBox"></div>
+      </div>
+      <div class="step-footer two">
+        <button class="btn-back" onclick="goStep(3,stepTab(3))">← กลับ</button>
+        <button class="btn-next" style="background:#0a0a0a;border:2px solid var(--red);color:var(--red-light)" onclick="doPrint()">🖨 พิมพ์ใบงาน</button>
+      </div>
+    </div>
+
+  </div><!-- /left -->
+
+  <!-- ========== RIGHT: SUMMARY + PAYMENT ========== -->
+  <div class="right-panel">
+
+    <div class="order-header">
+      <div class="order-title">ใบสั่งงาน <span class="badge" id="itemCountBadge">0</span></div>
+      <button class="clear-btn" onclick="resetAll()">รีเซ็ต</button>
+    </div>
+
+    <div class="order-items" id="orderItems">
+      <div class="order-empty"><div class="order-empty-icon">🚛</div><div class="order-empty-text">กรอกข้อมูลด้านซ้าย</div></div>
+    </div>
+
+    <!-- PAY TIMING -->
+    <div class="pay-timing-section">
+      <div class="field-label" style="margin-bottom:8px;font-size:11px;letter-spacing:2px;color:rgba(255,255,255,0.5)">💰 กำหนดชำระเงิน</div>
+      <div class="chip-group" id="payTimingGroup">
+        <button class="chip active" onclick="setChip('payTimingGroup','payTiming',this,'ต้นทาง')">🏠 ต้นทาง (ก่อนส่ง)</button>
+        <button class="chip" onclick="setChip('payTimingGroup','payTiming',this,'ปลายทาง')">🏁 ปลายทาง (หลังส่ง)</button>
+      </div>
+      <input type="hidden" id="payTiming" value="ต้นทาง" />
+    </div>
+
+    <div class="order-extras">
+      <input class="extra-input" placeholder="💬 หมายเหตุเพิ่มเติม..." id="jobNote" />
+      <input class="extra-input" placeholder="🏷 ส่วนลด %" id="discountInput" type="number" min="0" max="100" style="width:80px;flex:none" oninput="recalc()" />
+    </div>
+
+    <div class="order-totals">
+      <div class="total-row"><span class="label">ค่าบริการพื้นฐาน</span><span class="val" id="baseCost">฿0</span></div>
+      <div class="total-row"><span class="label">บริการเสริม</span><span class="val" id="addonCost">฿0</span></div>
+      <div class="total-row discount"><span class="label">ส่วนลด</span><span class="val" id="discountAmt">-฿0</span></div>
+      <div class="total-row vat"><span class="label">VAT 7%</span><span class="val" id="vatAmt">฿0</span></div>
+      <div class="total-grand">
+        <span class="label">ยอดชำระ</span>
+        <span class="amount"><span class="currency">฿</span><span id="grandTotal">0</span></span>
+      </div>
+    </div>
+
+    <div class="payment-section">
+      <div class="pay-methods">
+        <button class="pay-method selected" onclick="selectPayMethod('qr',this)"><span class="pay-icon">📱</span>QR Code</button>
+        <button class="pay-method" onclick="selectPayMethod('cash',this)"><span class="pay-icon">💵</span>เงินสด</button>
+        <button class="pay-method" onclick="selectPayMethod('transfer',this)"><span class="pay-icon">🏦</span>โอนเงิน</button>
+        <button class="pay-method" onclick="selectPayMethod('credit',this)"><span class="pay-icon">📃</span>เครดิต</button>
+      </div>
+      <button class="btn-charge" id="chargeBtn" onclick="openPayment()" disabled>
+        ออกใบสั่งงาน &amp; ชำระเงิน →
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- ===== MAP MODAL ===== -->
+<div class="modal-overlay" id="mapModal">
+  <div class="modal-box" style="width:560px">
+    <div class="modal-header">
+      <h2 id="mapModalTitle">📍 ปักหมุดต้นทาง</h2>
+      <button class="modal-close" onclick="closeMapModal()">✕</button>
+    </div>
+    <div class="modal-body" style="padding:0">
+      <div class="map-interactive" id="mapInteractive" onclick="handleMapClick(event)">
+        <div class="map-interactive-bg"></div>
+        <div class="map-interactive-grid"></div>
+        <div class="map-crosshair-label">คลิกเพื่อปักหมุด</div>
+        <div class="map-dropped-pin hidden" id="droppedPin">📍<span id="droppedPinLabel"></span></div>
+      </div>
+      <div style="padding:16px 20px;border-top:1px solid rgba(255,255,255,0.07)">
+        <div class="field-label" style="margin-bottom:8px">พิมพ์หรือเลือกสถานที่</div>
+        <div style="display:flex;gap:8px;margin-bottom:14px">
+          <input class="field-input" id="mapAddrInput" placeholder="ค้นหาที่อยู่..." style="flex:1" />
+          <button class="scan-btn" style="font-size:13px;letter-spacing:1px" onclick="confirmMapPin()">✓ ยืนยัน</button>
+        </div>
+        <div class="preset-label">📌 สถานที่ยอดนิยม</div>
+        <div class="preset-chips" id="presetChips"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== PAYMENT MODAL ===== -->
+<div class="modal-overlay" id="payModal">
+  <div class="modal-box">
+    <div class="modal-header">
+      <h2>💳 ชำระเงิน</h2>
+      <button class="modal-close" onclick="closePayModal()">✕</button>
+    </div>
+    <div class="modal-body" style="position:relative">
+
+      <div class="success-overlay" id="successOverlay">
+        <div class="success-icon">✅</div>
+        <div class="success-title">ออกใบสั่งงานสำเร็จ!</div>
+        <div class="success-sub">ขอบคุณที่ใช้บริการ Bang EX Logistics</div>
+        <div class="success-receipt">
+          <div style="font-size:11px;color:rgba(255,255,255,0.4);letter-spacing:2px;margin-bottom:6px">JOB ORDER</div>
+          <div class="receipt-amount" id="receiptJobId">BEX-00001</div>
+          <div class="receipt-ref" id="receiptAmt">฿0.00</div>
+          <div class="receipt-ref" id="receiptPayTiming">ชำระ: —</div>
+        </div>
+        <button class="btn-new-order" onclick="newJob()">+ ใบสั่งงานใหม่</button>
+      </div>
+
+      <!-- QR -->
+      <div id="qrSection">
+        <div class="qr-tabs">
+          <button class="qr-tab active" onclick="switchQrTab('promptpay',this)">📱 PromptPay</button>
+          <button class="qr-tab" onclick="switchQrTab('scb',this)">🏦 SCB</button>
+          <button class="qr-tab" onclick="switchQrTab('kbank',this)">🏦 KBank</button>
+        </div>
+        <div class="qr-display">
+          <div class="qr-amount-label">ยอดชำระ · <span id="qrPayTiming">ต้นทาง</span></div>
+          <div class="qr-amount"><span>฿</span><span id="modalAmount">0</span></div>
+          <div class="qr-code-wrap">
+            <canvas id="qrCanvas" width="196" height="196"></canvas>
+            <div class="qr-logo-overlay" style="font-size:18px">❄</div>
+          </div>
+          <div class="qr-bank-name" id="qrBankName">พร้อมเพย์ · PromptPay</div>
+          <div class="qr-account" id="qrAccount">098-005-4338</div>
+          <div class="qr-ref" id="qrRef">JOB: BEX-00001</div>
+        </div>
+        <div class="qr-timer">
+          <div class="timer-bar"><div class="timer-fill"></div></div>
+          <div class="timer-text" id="timerText">05:00</div>
+        </div>
+        <button class="btn-confirm" onclick="confirmPayment()">✅ ยืนยันการรับเงิน</button>
+      </div>
+
+      <!-- CASH -->
+      <div id="cashSection" class="cash-section">
+        <div class="cash-input-row">
+          <div>
+            <div class="cash-label">ยอดชำระ</div>
+            <div style="font-family:'Bebas Neue',sans-serif;font-size:32px;color:var(--red-light);letter-spacing:3px;margin-bottom:12px">฿<span id="cashTotalDisplay">0</span></div>
+          </div>
+          <div>
+            <div class="cash-label">รับเงิน (บาท)</div>
+            <input type="number" class="cash-input" id="cashReceived" placeholder="0" oninput="calcChange()" />
+          </div>
+          <div class="quick-cash">
+            <button class="quick-cash-btn" onclick="setCash(500)">500</button>
+            <button class="quick-cash-btn" onclick="setCash(1000)">1,000</button>
+            <button class="quick-cash-btn" onclick="setCash(2000)">2,000</button>
+            <button class="quick-cash-btn" onclick="setCash(5000)">5,000</button>
+            <button class="quick-cash-btn" onclick="setCash(10000)">10,000</button>
+            <button class="quick-cash-btn" onclick="setExact()">พอดี</button>
+          </div>
+          <div class="change-display">
+            <span class="change-label">เงินทอน</span>
+            <span class="change-amount" id="changeDisplay">฿0</span>
+          </div>
+        </div>
+        <button class="btn-confirm" onclick="confirmPayment()">✅ ยืนยันการรับเงินสด</button>
+      </div>
+
+      <!-- TRANSFER -->
+      <div id="transferSection" style="display:none">
+        <div style="text-align:center;padding:20px 0">
+          <div style="font-size:42px;margin-bottom:12px">🏦</div>
+          <div style="font-family:'Bebas Neue',sans-serif;font-size:22px;letter-spacing:3px;margin-bottom:4px">โอนเงินผ่านธนาคาร</div>
+          <div style="color:rgba(255,255,255,0.4);font-size:13px;margin-bottom:20px">กรุณาโอนแล้วแนบสลิปยืนยัน</div>
+          <div class="transfer-banks" id="transferBanks"></div>
+          <div style="font-family:'Bebas Neue',sans-serif;font-size:38px;color:var(--red-light);letter-spacing:3px;margin:20px 0">
+            ฿<span id="transferAmtDisplay">0</span>
+          </div>
+        </div>
+        <button class="btn-confirm" onclick="confirmPayment()">✅ ยืนยันการโอนเงิน</button>
+      </div>
+
+      <!-- CREDIT -->
+      <div id="creditSection" style="display:none">
+        <div style="text-align:center;padding:20px 0">
+          <div style="font-size:42px;margin-bottom:12px">📃</div>
+          <div style="font-family:'Bebas Neue',sans-serif;font-size:22px;letter-spacing:3px;margin-bottom:6px">เครดิตรายเดือน</div>
+          <div style="color:rgba(255,255,255,0.4);font-size:13px;margin-bottom:20px">บันทึกยอดในใบแจ้งหนี้ ชำระสิ้นเดือน</div>
+          <div style="background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.1);padding:16px 24px;margin-bottom:16px">
+            <div style="font-size:11px;color:rgba(255,255,255,0.4);letter-spacing:2px;margin-bottom:6px">เพิ่มในใบแจ้งหนี้</div>
+            <div style="font-family:'Bebas Neue',sans-serif;font-size:38px;color:var(--blue-cold);letter-spacing:3px">฿<span id="creditAmtDisplay">0</span></div>
+          </div>
+          <div style="font-size:12px;color:rgba(255,255,255,0.3);letter-spacing:1px">ครบกำหนด: สิ้นเดือน</div>
+        </div>
+        <button class="btn-confirm" style="background:#0e2a42" onclick="confirmPayment()">✅ บันทึกใบแจ้งหนี้</button>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<script src="pos.js"></script>
+</body>
+</html>

@@ -1,0 +1,390 @@
+/* ============================================
+   Bang EX — Logistics Job Order System
+   pos.css
+   ============================================ */
+
+:root {
+  --red: #D0021B;
+  --red-dark: #9B0015;
+  --red-light: #FF1A35;
+  --blue-cold: #4fc3f7;
+  --green: #4caf50;
+  --white: #FFFFFF;
+  --dark: #0d0d0d;
+  --panel: #141414;
+  --border: rgba(255,255,255,0.07);
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body { font-family: 'Sarabun', sans-serif; background: var(--dark); color: #fff; min-height: 100vh; overflow-x: hidden; }
+
+/* ---- TOPBAR ---- */
+.topbar {
+  background: var(--red); padding: 0 24px;
+  display: flex; align-items: center; justify-content: space-between;
+  font-size: 13px; font-weight: 600; letter-spacing: 1px; height: 48px; flex-shrink: 0;
+}
+.topbar-logo {
+  font-family: 'Bebas Neue', sans-serif; font-size: 19px; letter-spacing: 3px;
+  display: flex; align-items: center; gap: 8px; text-decoration: none; color: white;
+}
+.topbar-right { display: flex; align-items: center; gap: 20px; }
+.topbar-clock { font-family: 'Bebas Neue', sans-serif; font-size: 18px; letter-spacing: 2px; }
+.cashier-info { display: flex; align-items: center; gap: 6px; font-size: 12px; color: rgba(255,255,255,0.8); }
+.cashier-dot { width: 6px; height: 6px; border-radius: 50%; background: #a5d6a7; flex-shrink: 0; animation: pulse 2s infinite; }
+.topbar-back { font-size: 11px; color: rgba(255,255,255,0.7); text-decoration: none; letter-spacing: 1px; padding: 4px 10px; border: 1px solid rgba(255,255,255,0.3); transition: all .2s; }
+.topbar-back:hover { color: white; border-color: white; }
+
+/* ---- MAIN LAYOUT ---- */
+.pos-layout { display: grid; grid-template-columns: 1fr 360px; height: calc(100vh - 48px); overflow: hidden; }
+
+/* ---- LEFT PANEL ---- */
+.left-panel { display: flex; flex-direction: column; background: var(--panel); border-right: 1px solid var(--border); overflow: hidden; }
+.panel-header {
+  padding: 16px 24px 12px; border-bottom: 1px solid var(--border);
+  display: flex; align-items: center; justify-content: space-between; flex-shrink: 0;
+}
+.panel-title { font-family: 'Bebas Neue', sans-serif; font-size: 22px; letter-spacing: 3px; color: var(--red-light); }
+.order-id { font-size: 11px; color: rgba(255,255,255,0.35); letter-spacing: 2px; }
+
+/* ---- STEP TABS ---- */
+.cat-tabs {
+  display: flex; border-bottom: 1px solid var(--border); flex-shrink: 0; overflow-x: auto;
+  padding: 0 24px; scrollbar-width: none;
+}
+.cat-tabs::-webkit-scrollbar { display: none; }
+.cat-tab {
+  padding: 10px 18px; font-size: 12px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase;
+  color: rgba(255,255,255,0.35); cursor: pointer; border: none; background: none;
+  border-bottom: 2px solid transparent; margin-bottom: -1px; white-space: nowrap;
+  font-family: 'Sarabun', sans-serif; transition: all .2s;
+}
+.cat-tab.active { color: var(--red-light); border-bottom-color: var(--red); }
+.cat-tab:hover { color: rgba(255,255,255,0.7); }
+
+/* ---- STEP PANELS ---- */
+.step-panel { display: flex; flex-direction: column; flex: 1; overflow: hidden; }
+.step-panel.hidden { display: none; }
+.step-body { flex: 1; overflow-y: auto; padding: 20px 24px; display: flex; flex-direction: column; gap: 16px; }
+.step-body::-webkit-scrollbar { width: 3px; }
+.step-body::-webkit-scrollbar-thumb { background: rgba(208,2,27,0.3); }
+
+/* ---- FORM FIELDS ---- */
+.field-group { display: flex; flex-direction: column; gap: 6px; }
+.field-label { font-size: 11px; color: rgba(255,255,255,0.45); letter-spacing: 2px; text-transform: uppercase; font-weight: 700; }
+.req { color: var(--red-light); }
+.field-input {
+  background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); color: white;
+  padding: 11px 14px; font-family: 'Sarabun', sans-serif; font-size: 14px; outline: none; transition: border .2s;
+  width: 100%;
+}
+.field-input:focus { border-color: var(--red); }
+.field-input::placeholder { color: rgba(255,255,255,0.25); }
+.field-ta { min-height: 72px; resize: vertical; }
+.field-row2 { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+
+/* ---- CHIP BUTTONS ---- */
+.chip-group { display: flex; flex-wrap: wrap; gap: 8px; }
+.chip {
+  padding: 7px 14px; font-size: 12px; font-weight: 600; letter-spacing: .5px;
+  background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1);
+  color: rgba(255,255,255,0.5); cursor: pointer; transition: all .2s;
+  font-family: 'Sarabun', sans-serif;
+}
+.chip:hover { border-color: rgba(208,2,27,0.4); color: rgba(255,255,255,0.8); }
+.chip.active { background: rgba(208,2,27,0.18); border-color: var(--red); color: var(--red-light); }
+
+/* ---- TRUCK GRID ---- */
+.truck-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
+.truck-card {
+  background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08);
+  padding: 12px 8px; text-align: center; cursor: pointer; transition: all .2s;
+  position: relative;
+}
+.truck-card:hover { border-color: rgba(208,2,27,0.4); background: rgba(208,2,27,0.08); transform: translateY(-2px); }
+.truck-card.selected { border-color: var(--red); background: rgba(208,2,27,0.18); }
+.truck-icon { font-size: 28px; margin-bottom: 6px; display: block; }
+.truck-name { font-size: 11px; font-weight: 700; line-height: 1.3; color: rgba(255,255,255,0.85); }
+.truck-cap { font-size: 10px; color: rgba(255,255,255,0.35); margin-top: 2px; }
+.truck-price { font-family: 'Bebas Neue', sans-serif; font-size: 14px; color: var(--red-light); letter-spacing: 1px; margin-top: 4px; }
+.truck-badge {
+  position: absolute; top: 4px; right: 4px; font-size: 8px; padding: 2px 5px;
+  background: rgba(79,195,247,0.2); color: var(--blue-cold); letter-spacing: 1px; font-weight: 700;
+}
+
+/* ---- HOUR SELECTOR ---- */
+.hour-row { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
+.hour-btn {
+  width: 34px; height: 34px; background: rgba(255,255,255,0.07); border: none;
+  color: white; font-size: 18px; cursor: pointer; transition: background .2s;
+  display: flex; align-items: center; justify-content: center;
+}
+.hour-btn:hover { background: var(--red); }
+.hour-display {
+  font-family: 'Bebas Neue', sans-serif; font-size: 28px; letter-spacing: 2px;
+  background: rgba(255,255,255,0.05); padding: 4px 16px; min-width: 80px; text-align: center;
+}
+.hour-unit { font-size: 14px; opacity: .6; margin-left: 4px; }
+.hour-preset { display: flex; gap: 6px; flex-wrap: wrap; }
+.hour-pre-btn {
+  padding: 4px 10px; font-size: 12px; font-weight: 700; background: rgba(255,255,255,0.05);
+  border: 1px solid rgba(255,255,255,0.1); color: rgba(255,255,255,0.5); cursor: pointer;
+  transition: all .2s; font-family: 'Sarabun', sans-serif;
+}
+.hour-pre-btn:hover { border-color: var(--red); color: white; }
+.hour-pre-btn.active { background: rgba(208,2,27,0.2); border-color: var(--red); color: var(--red-light); }
+
+/* ---- ADD-ON LIST ---- */
+.addon-list { display: flex; flex-direction: column; gap: 6px; }
+.addon-item {
+  display: flex; align-items: center; gap: 12px; padding: 10px 14px;
+  background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.07); cursor: pointer; transition: all .2s;
+}
+.addon-item:hover { border-color: rgba(208,2,27,0.3); }
+.addon-item.selected { background: rgba(208,2,27,0.12); border-color: rgba(208,2,27,0.5); }
+.addon-check { width: 16px; height: 16px; border: 1.5px solid rgba(255,255,255,0.2); display: flex; align-items: center; justify-content: center; font-size: 10px; flex-shrink: 0; }
+.addon-item.selected .addon-check { background: var(--red); border-color: var(--red); }
+.addon-icon { font-size: 18px; }
+.addon-info { flex: 1; }
+.addon-name { font-size: 13px; font-weight: 600; }
+.addon-desc { font-size: 11px; color: rgba(255,255,255,0.35); }
+.addon-price-tag { font-family: 'Bebas Neue', sans-serif; font-size: 14px; color: var(--red-light); letter-spacing: 1px; }
+
+/* ---- MAP AREA ---- */
+.map-pin-row { display: flex; align-items: center; gap: 10px; margin-top: 6px; }
+.pin-btn {
+  padding: 6px 14px; font-size: 12px; font-weight: 600; letter-spacing: .5px;
+  background: rgba(79,195,247,0.1); border: 1px solid rgba(79,195,247,0.3);
+  color: var(--blue-cold); cursor: pointer; transition: all .2s; font-family: 'Sarabun', sans-serif;
+}
+.pin-btn:hover { background: rgba(79,195,247,0.2); }
+.pin-status { font-size: 11px; color: rgba(255,255,255,0.3); letter-spacing: 1px; }
+.pin-status.pinned { color: var(--green); }
+
+/* ---- MINI MAP ---- */
+.map-mock {
+  position: relative; height: 140px; overflow: hidden; margin-top: 4px;
+  border: 1px solid rgba(255,255,255,0.08);
+}
+.map-mock-bg {
+  position: absolute; inset: 0;
+  background: #0e1a2a;
+  background-image:
+    repeating-linear-gradient(0deg, transparent, transparent 20px, rgba(79,195,247,0.04) 20px, rgba(79,195,247,0.04) 21px),
+    repeating-linear-gradient(90deg, transparent, transparent 20px, rgba(79,195,247,0.04) 20px, rgba(79,195,247,0.04) 21px);
+}
+.map-mock-grid { position: absolute; inset: 0; }
+.map-route-svg { position: absolute; inset: 0; width: 100%; height: 100%; }
+.map-pin-a { position: absolute; top: 50%; left: 15%; transform: translate(-50%,-100%); font-size: 20px; filter: drop-shadow(0 2px 4px rgba(0,0,0,0.5)); transition: all .5s; }
+.map-pin-b { position: absolute; top: 50%; left: 85%; transform: translate(-50%,-100%); font-size: 20px; filter: drop-shadow(0 2px 4px rgba(0,0,0,0.5)); transition: all .5s; }
+.map-distance-badge {
+  position: absolute; bottom: 8px; right: 8px;
+  background: rgba(208,2,27,0.85); color: white;
+  font-family: 'Bebas Neue', sans-serif; font-size: 14px; letter-spacing: 2px; padding: 3px 10px;
+}
+.map-mock-overlay {
+  position: absolute; inset: 0; display: flex; align-items: center; justify-content: center;
+  font-size: 11px; color: rgba(255,255,255,0.3); letter-spacing: 2px; text-transform: uppercase;
+  pointer-events: none;
+}
+
+/* ---- STEP FOOTER ---- */
+.step-footer { padding: 14px 24px; border-top: 1px solid var(--border); display: flex; gap: 10px; flex-shrink: 0; }
+.step-footer.two { justify-content: space-between; }
+.btn-next {
+  flex: 1; background: var(--red); border: none; color: white;
+  padding: 12px; font-family: 'Bebas Neue', sans-serif; font-size: 17px; letter-spacing: 3px;
+  cursor: pointer; clip-path: polygon(4% 0%, 100% 0%, 96% 100%, 0% 100%); transition: all .2s;
+}
+.btn-next:hover { background: var(--red-light); }
+.btn-back {
+  background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.1); color: rgba(255,255,255,0.6);
+  padding: 12px 20px; font-family: 'Bebas Neue', sans-serif; font-size: 15px; letter-spacing: 2px; cursor: pointer; transition: all .2s;
+}
+.btn-back:hover { border-color: var(--red); color: white; }
+
+/* ---- SUMMARY BOX ---- */
+.summary-box { display: flex; flex-direction: column; gap: 12px; }
+.sum-section { background: rgba(255,255,255,0.04); border-left: 3px solid var(--red); padding: 12px 16px; }
+.sum-section-title { font-size: 10px; letter-spacing: 3px; text-transform: uppercase; color: var(--red-light); margin-bottom: 8px; font-weight: 700; }
+.sum-row { display: flex; justify-content: space-between; font-size: 13px; padding: 3px 0; }
+.sum-row .k { color: rgba(255,255,255,0.45); }
+.sum-row .v { font-weight: 600; color: white; }
+.sum-temp { color: var(--blue-cold) !important; }
+
+/* ---- RIGHT PANEL ---- */
+.right-panel { display: flex; flex-direction: column; background: #111; overflow: hidden; }
+.order-header { padding: 16px 20px 12px; border-bottom: 1px solid var(--border); display: flex; align-items: center; justify-content: space-between; flex-shrink: 0; }
+.order-title { font-family: 'Bebas Neue', sans-serif; font-size: 20px; letter-spacing: 3px; }
+.badge { display: inline-block; background: var(--red); color: white; font-size: 10px; font-weight: 700; letter-spacing: 1px; padding: 2px 7px; vertical-align: middle; margin-left: 6px; }
+.clear-btn { font-size: 11px; color: rgba(255,255,255,0.35); background: none; border: 1px solid rgba(255,255,255,0.1); padding: 4px 12px; cursor: pointer; font-family: 'Sarabun', sans-serif; transition: all .2s; letter-spacing: 1px; }
+.clear-btn:hover { border-color: var(--red); color: var(--red); }
+
+/* ---- ORDER ITEMS ---- */
+.order-items { flex: 1; overflow-y: auto; padding: 14px 20px; }
+.order-items::-webkit-scrollbar { width: 3px; }
+.order-items::-webkit-scrollbar-thumb { background: rgba(208,2,27,0.3); }
+.order-empty { text-align: center; padding: 40px 20px; color: rgba(255,255,255,0.2); }
+.order-empty-icon { font-size: 44px; margin-bottom: 10px; }
+.order-empty-text { font-size: 12px; letter-spacing: 2px; text-transform: uppercase; }
+
+.job-card { animation: fadeUp .3s ease both; }
+.job-section { margin-bottom: 12px; }
+.job-sec-label { font-size: 10px; color: rgba(255,255,255,0.35); letter-spacing: 2px; text-transform: uppercase; margin-bottom: 6px; }
+.job-sec-val { font-size: 14px; font-weight: 600; color: white; line-height: 1.5; }
+.job-route-row { display: flex; align-items: flex-start; gap: 8px; font-size: 13px; padding: 6px 0; border-bottom: 1px solid rgba(255,255,255,0.05); }
+.job-route-icon { font-size: 16px; flex-shrink: 0; margin-top: 1px; }
+.job-route-addr { flex: 1; color: rgba(255,255,255,0.8); line-height: 1.4; }
+.job-tag {
+  display: inline-block; font-size: 10px; font-weight: 700; letter-spacing: 1px; padding: 3px 8px;
+  background: rgba(79,195,247,0.1); color: var(--blue-cold); margin-right: 6px; margin-bottom: 4px;
+}
+.job-tag.red { background: rgba(208,2,27,0.15); color: var(--red-light); }
+.job-tag.green { background: rgba(76,175,80,0.15); color: #81c784; }
+
+/* ---- PAY TIMING ---- */
+.pay-timing-section { padding: 12px 20px; border-top: 1px solid var(--border); flex-shrink: 0; }
+
+/* ---- EXTRAS ---- */
+.order-extras { padding: 8px 20px; display: flex; gap: 8px; flex-shrink: 0; }
+.extra-input { flex: 1; background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08); color: white; padding: 8px 12px; font-family: 'Sarabun', sans-serif; font-size: 13px; outline: none; transition: border .2s; }
+.extra-input:focus { border-color: rgba(208,2,27,0.4); }
+.extra-input::placeholder { color: rgba(255,255,255,0.2); }
+
+/* ---- TOTALS ---- */
+.order-totals { padding: 10px 20px; border-top: 1px solid rgba(255,255,255,0.06); display: flex; flex-direction: column; gap: 5px; flex-shrink: 0; }
+.total-row { display: flex; justify-content: space-between; font-size: 13px; }
+.total-row .label { color: rgba(255,255,255,0.45); }
+.total-row .val { font-weight: 600; }
+.total-row.discount .val { color: var(--green); }
+.total-row.vat .val { color: rgba(255,255,255,0.4); }
+.total-grand { display: flex; justify-content: space-between; align-items: baseline; margin-top: 8px; padding-top: 10px; border-top: 1px solid rgba(255,255,255,0.1); }
+.total-grand .label { font-family: 'Bebas Neue', sans-serif; font-size: 18px; letter-spacing: 3px; color: rgba(255,255,255,0.6); }
+.total-grand .amount { font-family: 'Bebas Neue', sans-serif; font-size: 34px; color: var(--red-light); letter-spacing: 2px; }
+.total-grand .currency { font-size: 16px; opacity: .7; margin-right: 2px; }
+
+/* ---- PAYMENT ---- */
+.payment-section { padding: 10px 20px 14px; display: flex; flex-direction: column; gap: 8px; flex-shrink: 0; }
+.pay-methods { display: grid; grid-template-columns: repeat(4, 1fr); gap: 6px; }
+.pay-method { background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.09); color: rgba(255,255,255,0.5); padding: 8px 4px; text-align: center; font-size: 10px; font-weight: 700; letter-spacing: .5px; cursor: pointer; transition: all .2s; font-family: 'Sarabun', sans-serif; }
+.pay-method:hover { border-color: var(--red); color: white; }
+.pay-method.selected { background: rgba(208,2,27,0.15); border-color: var(--red); color: var(--red-light); }
+.pay-icon { font-size: 16px; display: block; margin-bottom: 3px; }
+
+.btn-charge { background: var(--red); border: none; color: white; padding: 14px; font-family: 'Bebas Neue', sans-serif; font-size: 18px; letter-spacing: 3px; cursor: pointer; clip-path: polygon(3% 0%, 100% 0%, 97% 100%, 0% 100%); transition: all .2s; width: 100%; }
+.btn-charge:hover { background: var(--red-light); transform: translateY(-1px); box-shadow: 0 6px 20px rgba(208,2,27,0.35); }
+.btn-charge:disabled { background: rgba(255,255,255,0.08); color: rgba(255,255,255,0.25); cursor: not-allowed; transform: none; box-shadow: none; }
+
+/* ---- MODALS ---- */
+.modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.85); z-index: 1000; display: none; align-items: center; justify-content: center; backdrop-filter: blur(4px); }
+.modal-overlay.open { display: flex; animation: fadeIn .25s ease; }
+.modal-box { background: #161616; border-top: 4px solid var(--red); width: 460px; max-width: 95vw; max-height: 92vh; overflow-y: auto; animation: slideUp .3s ease; position: relative; }
+.modal-box::-webkit-scrollbar { width: 3px; }
+.modal-box::-webkit-scrollbar-thumb { background: rgba(208,2,27,0.3); }
+.modal-header { background: var(--red); padding: 14px 22px; display: flex; align-items: center; justify-content: space-between; position: sticky; top: 0; z-index: 1; }
+.modal-header h2 { font-family: 'Bebas Neue', sans-serif; font-size: 20px; letter-spacing: 3px; }
+.modal-close { background: none; border: none; color: white; font-size: 20px; cursor: pointer; opacity: .8; transition: opacity .2s; }
+.modal-close:hover { opacity: 1; }
+.modal-body { padding: 24px 22px; }
+
+/* ---- MAP MODAL ---- */
+.map-interactive {
+  position: relative; height: 260px; cursor: crosshair; overflow: hidden;
+  border-bottom: 1px solid var(--border);
+}
+.map-interactive-bg {
+  position: absolute; inset: 0;
+  background: #0a1520;
+  background-image:
+    repeating-linear-gradient(0deg, transparent, transparent 30px, rgba(79,195,247,0.05) 30px, rgba(79,195,247,0.05) 31px),
+    repeating-linear-gradient(90deg, transparent, transparent 30px, rgba(79,195,247,0.05) 30px, rgba(79,195,247,0.05) 31px);
+}
+.map-interactive-grid { position: absolute; inset: 0; }
+.map-crosshair-label { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; font-size: 12px; color: rgba(255,255,255,0.25); letter-spacing: 3px; text-transform: uppercase; pointer-events: none; }
+.map-dropped-pin { position: absolute; font-size: 28px; transform: translate(-50%,-100%); filter: drop-shadow(0 3px 8px rgba(0,0,0,0.6)); pointer-events: none; animation: pinDrop .3s ease; transition: left .2s, top .2s; }
+.map-dropped-pin span { position: absolute; left: 50%; transform: translateX(-50%); bottom: -18px; font-size: 10px; color: white; background: var(--red); padding: 2px 6px; white-space: nowrap; letter-spacing: 1px; }
+.map-dropped-pin.hidden { display: none; }
+
+.preset-label { font-size: 10px; color: rgba(255,255,255,0.35); letter-spacing: 2px; text-transform: uppercase; margin-bottom: 8px; }
+.preset-chips { display: flex; flex-wrap: wrap; gap: 6px; }
+.preset-chip { padding: 5px 12px; font-size: 11px; font-weight: 600; background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.1); color: rgba(255,255,255,0.55); cursor: pointer; transition: all .2s; font-family: 'Sarabun', sans-serif; }
+.preset-chip:hover { border-color: var(--blue-cold); color: var(--blue-cold); }
+
+/* ---- QR PAYMENT ---- */
+.qr-tabs { display: flex; border-bottom: 1px solid rgba(255,255,255,0.1); margin-bottom: 20px; }
+.qr-tab { flex: 1; padding: 9px; text-align: center; font-size: 12px; font-weight: 700; letter-spacing: .5px; color: rgba(255,255,255,0.4); cursor: pointer; border: none; background: none; border-bottom: 2px solid transparent; margin-bottom: -1px; font-family: 'Sarabun', sans-serif; transition: all .2s; }
+.qr-tab.active { color: var(--red-light); border-bottom-color: var(--red); }
+.qr-display { text-align: center; }
+.qr-amount-label { font-size: 11px; color: rgba(255,255,255,0.4); letter-spacing: 3px; text-transform: uppercase; margin-bottom: 6px; }
+.qr-amount { font-family: 'Bebas Neue', sans-serif; font-size: 44px; color: var(--red-light); letter-spacing: 3px; margin-bottom: 20px; }
+.qr-amount span { font-size: 22px; opacity: .7; margin-right: 3px; }
+.qr-code-wrap { width: 210px; height: 210px; margin: 0 auto 16px; background: white; padding: 10px; display: flex; align-items: center; justify-content: center; position: relative; box-shadow: 0 0 40px rgba(208,2,27,0.2); }
+.qr-logo-overlay { position: absolute; width: 40px; height: 40px; background: white; display: flex; align-items: center; justify-content: center; border-radius: 4px; box-shadow: 0 0 8px rgba(0,0,0,0.2); }
+.qr-bank-name { font-size: 13px; color: rgba(255,255,255,0.45); margin-bottom: 4px; letter-spacing: 1px; }
+.qr-account { font-size: 15px; font-weight: 700; color: white; letter-spacing: 3px; }
+.qr-ref { font-size: 11px; color: rgba(255,255,255,0.3); letter-spacing: 2px; margin-top: 10px; }
+.qr-timer { display: flex; align-items: center; gap: 10px; margin-top: 14px; }
+.timer-bar { flex: 1; height: 2px; background: rgba(255,255,255,0.08); position: relative; overflow: hidden; }
+.timer-fill { position: absolute; left: 0; top: 0; bottom: 0; background: var(--red); animation: countdown 300s linear forwards; }
+.timer-text { font-family: 'Bebas Neue', sans-serif; font-size: 15px; color: rgba(255,255,255,0.45); letter-spacing: 2px; min-width: 44px; text-align: right; }
+
+/* ---- CASH ---- */
+.cash-section { display: none; }
+.cash-section.show { display: block; }
+.cash-label { font-size: 11px; color: rgba(255,255,255,0.4); letter-spacing: 2px; text-transform: uppercase; margin-bottom: 6px; }
+.cash-input { width: 100%; background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.1); color: white; padding: 12px 16px; font-family: 'Bebas Neue', sans-serif; font-size: 26px; letter-spacing: 3px; outline: none; text-align: center; transition: border .2s; }
+.cash-input:focus { border-color: var(--red); }
+.cash-input-row { display: flex; flex-direction: column; gap: 12px; }
+.quick-cash { display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px; }
+.quick-cash-btn { background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08); color: rgba(255,255,255,0.6); padding: 9px; font-family: 'Bebas Neue', sans-serif; font-size: 15px; letter-spacing: 1px; cursor: pointer; transition: all .2s; }
+.quick-cash-btn:hover { background: rgba(208,2,27,0.15); border-color: var(--red); color: white; }
+.change-display { background: rgba(79,195,247,0.07); border: 1px solid rgba(79,195,247,0.2); padding: 12px 16px; display: flex; justify-content: space-between; align-items: center; }
+.change-label { font-size: 12px; color: rgba(255,255,255,0.4); letter-spacing: 2px; }
+.change-amount { font-family: 'Bebas Neue', sans-serif; font-size: 24px; color: var(--blue-cold); letter-spacing: 2px; }
+
+/* ---- TRANSFER BANKS ---- */
+.transfer-banks { display: flex; flex-direction: column; gap: 8px; max-width: 300px; margin: 0 auto; }
+.transfer-bank-item { background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.1); padding: 12px 16px; display: flex; justify-content: space-between; align-items: center; }
+.tb-name { font-size: 13px; font-weight: 600; }
+.tb-account { font-size: 12px; color: rgba(255,255,255,0.4); letter-spacing: 2px; }
+
+/* ---- CONFIRM / NEW ORDER ---- */
+.btn-confirm { background: #1a4d1a; border: none; color: white; padding: 13px; font-family: 'Bebas Neue', sans-serif; font-size: 18px; letter-spacing: 3px; cursor: pointer; width: 100%; margin-top: 16px; transition: all .2s; }
+.btn-confirm:hover { background: #236323; }
+.btn-new-order { background: var(--red); border: none; color: white; padding: 11px 28px; font-family: 'Bebas Neue', sans-serif; font-size: 16px; letter-spacing: 3px; cursor: pointer; margin-top: 8px; transition: all .2s; clip-path: polygon(6% 0%, 100% 0%, 94% 100%, 0% 100%); }
+.btn-new-order:hover { background: var(--red-light); }
+
+/* ---- SUCCESS OVERLAY ---- */
+.success-overlay { position: absolute; inset: 0; background: #0a1f0a; display: none; flex-direction: column; align-items: center; justify-content: center; gap: 12px; padding: 24px; }
+.success-overlay.show { display: flex; animation: fadeIn .4s ease; }
+.success-icon { font-size: 56px; animation: popIn .4s ease; }
+.success-title { font-family: 'Bebas Neue', sans-serif; font-size: 26px; letter-spacing: 4px; color: var(--green); }
+.success-sub { font-size: 13px; color: rgba(255,255,255,0.45); letter-spacing: 1px; text-align: center; }
+.success-receipt { background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); padding: 14px 24px; text-align: center; margin-top: 8px; width: 100%; }
+.receipt-amount { font-family: 'Bebas Neue', sans-serif; font-size: 32px; color: white; letter-spacing: 3px; }
+.receipt-ref { font-size: 11px; color: rgba(255,255,255,0.3); letter-spacing: 2px; margin-top: 4px; }
+
+/* ---- ANIMATIONS ---- */
+@keyframes fadeUp { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: translateY(0); } }
+@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+@keyframes slideUp { from { opacity: 0; transform: translateY(28px); } to { opacity: 1; transform: translateY(0); } }
+@keyframes popIn { 0% { transform: scale(0); } 70% { transform: scale(1.2); } 100% { transform: scale(1); } }
+@keyframes pinDrop { from { transform: translate(-50%,-160%); opacity: 0; } to { transform: translate(-50%,-100%); opacity: 1; } }
+@keyframes countdown { from { width: 100%; } to { width: 0%; } }
+@keyframes pulse { 0%,100% { box-shadow: 0 0 0 0 rgba(165,214,167,.4); } 50% { box-shadow: 0 0 0 5px rgba(165,214,167,0); } }
+
+/* ---- RESPONSIVE ---- */
+@media (max-width: 900px) {
+  .pos-layout { grid-template-columns: 1fr; height: auto; }
+  .left-panel { height: auto; min-height: 70vh; }
+  .right-panel { border-top: 1px solid var(--border); }
+  .field-row2 { grid-template-columns: 1fr; }
+  .truck-grid { grid-template-columns: repeat(2, 1fr); }
+  .pay-methods { grid-template-columns: repeat(2, 1fr); }
+}
+@media (max-width: 600px) {
+  .topbar { padding: 0 14px; }
+  .cashier-info { display: none; }
+  .truck-grid { grid-template-columns: repeat(2, 1fr); }
+}
