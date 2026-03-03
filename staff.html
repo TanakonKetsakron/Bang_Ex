@@ -303,6 +303,14 @@
       <div class="nav-item" onclick="showSection('delivery',this)"><span class="nav-icon">🚚</span> การจัดส่ง<span class="nav-badge" id="badgeDelivery">3</span></div>
       <div class="nav-item" onclick="showSection('pos',this)"><span class="nav-icon">🏪</span> POS ขายหน้าร้าน</div>
     </div>
+    <div class="nav-section">
+      <div class="nav-label">เครื่องมือพนักงาน</div>
+      <div class="nav-item" onclick="showSection('schedule',this)"><span class="nav-icon">📅</span> ตารางงาน/เวร</div>
+      <div class="nav-item" onclick="showSection('gps',this)"><span class="nav-icon">🗺️</span> GPS ติดตามรถ</div>
+      <div class="nav-item" onclick="showSection('report',this)"><span class="nav-icon">⚠️</span> รายงานปัญหา</div>
+      <div class="nav-item" onclick="showSection('notifications',this)"><span class="nav-icon">🔔</span> แจ้งเตือน<span class="nav-badge" id="badgeNotif">3</span></div>
+      <div class="nav-item" onclick="showSection('upload',this)"><span class="nav-icon">📸</span> อัปโหลดรูปส่งของ</div>
+    </div>
     <div class="sidebar-bottom">
       <button class="btn-logout" onclick="doLogout()"><span>🚪</span> ออกจากระบบ</button>
     </div>
@@ -418,6 +426,196 @@
         </div>
       </div>
 
+
+      <!-- SCHEDULE -->
+      <div class="section" id="sec-schedule">
+        <div class="stat-grid">
+          <div class="stat-card"><div class="stat-icon blue">📅</div><div><div class="stat-num">6</div><div class="stat-label">วันทำงานเดือนนี้</div></div></div>
+          <div class="stat-card"><div class="stat-icon green">✅</div><div><div class="stat-num">4</div><div class="stat-label">เข้างานแล้ว</div></div></div>
+          <div class="stat-card"><div class="stat-icon orange">⏰</div><div><div class="stat-num">2</div><div class="stat-label">เวรที่เหลือ</div></div></div>
+          <div class="stat-card"><div class="stat-icon red">🏖️</div><div><div class="stat-num">1</div><div class="stat-label">วันลาคงเหลือ</div></div></div>
+        </div>
+        <div class="card">
+          <div class="card-header"><div class="card-title">📅 ตารางเวรประจำสัปดาห์นี้</div></div>
+          <table>
+            <thead><tr><th>วัน</th><th>วันที่</th><th>เวลา</th><th>เส้นทาง</th><th>หัวหน้าเวร</th><th>สถานะ</th></tr></thead>
+            <tbody>
+              <tr><td>จันทร์</td><td>03/03/2568</td><td>07:00 – 16:00</td><td>กรุงเทพฯ โซน A</td><td>สุรชัย ดีงาม</td><td><span class="badge badge-success">✅ เข้างานแล้ว</span></td></tr>
+              <tr><td>อังคาร</td><td>04/03/2568</td><td>07:00 – 16:00</td><td>กรุงเทพฯ โซน B</td><td>สุรชัย ดีงาม</td><td><span class="badge badge-success">✅ เข้างานแล้ว</span></td></tr>
+              <tr><td>พุธ</td><td>05/03/2568</td><td>หยุด</td><td>—</td><td>—</td><td><span class="badge badge-info">🏖️ วันหยุด</span></td></tr>
+              <tr><td>พฤหัส</td><td>06/03/2568</td><td>08:00 – 17:00</td><td>ปริมณฑล</td><td>มานะ รักงาน</td><td><span class="badge badge-warning">⏳ กำลังจะมาถึง</span></td></tr>
+              <tr><td>ศุกร์</td><td>07/03/2568</td><td>08:00 – 17:00</td><td>ปริมณฑล</td><td>มานะ รักงาน</td><td><span class="badge badge-warning">⏳ กำลังจะมาถึง</span></td></tr>
+              <tr><td>เสาร์</td><td>08/03/2568</td><td>07:00 – 13:00</td><td>กรุงเทพฯ โซน A</td><td>สุรชัย ดีงาม</td><td><span class="badge badge-warning">⏳ กำลังจะมาถึง</span></td></tr>
+              <tr><td>อาทิตย์</td><td>09/03/2568</td><td>หยุด</td><td>—</td><td>—</td><td><span class="badge badge-info">🏖️ วันหยุด</span></td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="card">
+          <div class="card-header"><div class="card-title">📝 ขอเปลี่ยนเวร / ลางาน</div></div>
+          <div style="padding:20px;display:flex;gap:12px;flex-wrap:wrap;">
+            <button class="btn btn-primary" onclick="showToast('📝 ส่งคำขอลางานแล้ว รอหัวหน้าอนุมัติ')">🏖️ ขอลางาน</button>
+            <button class="btn btn-outline" onclick="showToast('🔄 ส่งคำขอเปลี่ยนเวรแล้ว')">🔄 ขอเปลี่ยนเวร</button>
+            <button class="btn btn-outline" onclick="showToast('📋 โหลดตารางเวรเดือนหน้าแล้ว')">📅 ดูตารางเดือนหน้า</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- GPS -->
+      <div class="section" id="sec-gps">
+        <div class="stat-grid">
+          <div class="stat-card"><div class="stat-icon green">🟢</div><div><div class="stat-num">3</div><div class="stat-label">รถออนไลน์</div></div></div>
+          <div class="stat-card"><div class="stat-icon orange">🔶</div><div><div class="stat-num">1</div><div class="stat-label">รถจอดพัก</div></div></div>
+          <div class="stat-card"><div class="stat-icon blue">📦</div><div><div class="stat-num">12</div><div class="stat-label">พัสดุกำลังส่ง</div></div></div>
+          <div class="stat-card"><div class="stat-icon red">🔴</div><div><div class="stat-num">0</div><div class="stat-label">รถขาดการติดต่อ</div></div></div>
+        </div>
+        <div class="card" style="margin-bottom:20px">
+          <div class="card-header"><div class="card-title">🗺️ แผนที่ติดตามรถแบบ Real-time</div><span style="font-size:12px;color:var(--success)">● Live</span></div>
+          <div id="gpsMap" style="height:360px;background:linear-gradient(135deg,#e8f4f8,#d0e8f0);display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden;">
+            <div style="position:absolute;inset:0;background-image:repeating-linear-gradient(0deg,rgba(0,0,0,0.04) 0px,transparent 1px,transparent 40px),repeating-linear-gradient(90deg,rgba(0,0,0,0.04) 0px,transparent 1px,transparent 40px);"></div>
+            <div style="position:relative;z-index:2;text-align:center;">
+              <div style="font-size:48px;margin-bottom:12px;">🗺️</div>
+              <div style="font-size:15px;font-weight:700;color:var(--primary);">แผนที่ GPS Live</div>
+              <div style="font-size:13px;color:var(--muted);margin-top:6px;">ต้องเชื่อมต่อ Google Maps API</div>
+              <button class="btn btn-primary" style="margin-top:14px" onclick="showToast('🗺️ กำลังเปิด Google Maps...')">เปิด Google Maps</button>
+            </div>
+            <div style="position:absolute;top:30px;left:60px;font-size:28px;animation:pulse 2s infinite">🚚</div>
+            <div style="position:absolute;top:120px;right:80px;font-size:28px;animation:pulse 2.5s infinite">🚛</div>
+            <div style="position:absolute;bottom:60px;left:120px;font-size:28px;animation:pulse 3s infinite">🚐</div>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-header"><div class="card-title">🚚 สถานะรถแต่ละคัน</div></div>
+          <table>
+            <thead><tr><th>ทะเบียนรถ</th><th>คนขับ</th><th>ตำแหน่งล่าสุด</th><th>ความเร็ว</th><th>สถานะ</th><th>อัปเดต</th></tr></thead>
+            <tbody>
+              <tr><td><strong>กข 8821</strong></td><td>สมชาย ใจดี</td><td>พระโขนง, กทม.</td><td>45 กม./ชม.</td><td><span class="badge badge-success">🟢 กำลังส่ง</span></td><td>2 นาทีที่แล้ว</td></tr>
+              <tr><td><strong>ขค 4412</strong></td><td>วิรัช สุขใจ</td><td>ลาดพร้าว, กทม.</td><td>0 กม./ชม.</td><td><span class="badge badge-warning">🔶 จอดพัก</span></td><td>8 นาทีที่แล้ว</td></tr>
+              <tr><td><strong>งจ 5530</strong></td><td>ธนา รักดี</td><td>นนทบุรี</td><td>60 กม./ชม.</td><td><span class="badge badge-success">🟢 กำลังส่ง</span></td><td>1 นาทีที่แล้ว</td></tr>
+              <tr><td><strong>ฉช 7744</strong></td><td>มาลี ดีงาม</td><td>ปทุมธานี</td><td>52 กม./ชม.</td><td><span class="badge badge-success">🟢 กำลังส่ง</span></td><td>3 นาทีที่แล้ว</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- REPORT PROBLEM -->
+      <div class="section" id="sec-report">
+        <div class="card" style="margin-bottom:20px">
+          <div class="card-header"><div class="card-title">⚠️ แจ้งปัญหา / รายงานเหตุการณ์</div></div>
+          <div style="padding:24px;display:grid;gap:16px;">
+            <div class="form-group">
+              <label>ประเภทปัญหา</label>
+              <select id="reportType" style="width:100%;padding:11px 14px;border:1.5px solid var(--border);border-radius:8px;font-size:14px;outline:none;">
+                <option value="">-- เลือกประเภท --</option>
+                <option>🚗 รถเสีย/อุบัติเหตุ</option>
+                <option>📦 พัสดุเสียหาย</option>
+                <option>🏠 หาที่อยู่ไม่พบ</option>
+                <option>📵 ผู้รับไม่รับสาย</option>
+                <option>🔒 ปัญหาระบบ/แอปขัดข้อง</option>
+                <option>👤 ปัญหากับลูกค้า</option>
+                <option>🌧️ ปัญหาสภาพอากาศ</option>
+                <option>อื่นๆ</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label>เลขออเดอร์ที่เกี่ยวข้อง (ถ้ามี)</label>
+              <input type="text" id="reportOrder" placeholder="เช่น ORD-20250302-001" style="width:100%;padding:11px 14px;border:1.5px solid var(--border);border-radius:8px;font-size:14px;outline:none;"/>
+            </div>
+            <div class="form-group">
+              <label>รายละเอียดเพิ่มเติม</label>
+              <textarea id="reportDetail" rows="4" placeholder="อธิบายรายละเอียดของปัญหา..." style="width:100%;padding:11px 14px;border:1.5px solid var(--border);border-radius:8px;font-size:14px;outline:none;resize:vertical;"></textarea>
+            </div>
+            <div class="form-group">
+              <label>ระดับความเร่งด่วน</label>
+              <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:6px;">
+                <label style="display:flex;align-items:center;gap:6px;cursor:pointer;"><input type="radio" name="urgency" value="low" checked> 🟢 ปกติ</label>
+                <label style="display:flex;align-items:center;gap:6px;cursor:pointer;"><input type="radio" name="urgency" value="med"> 🟡 ด่วน</label>
+                <label style="display:flex;align-items:center;gap:6px;cursor:pointer;"><input type="radio" name="urgency" value="high"> 🔴 เร่งด่วนมาก</label>
+              </div>
+            </div>
+            <div style="display:flex;gap:10px;">
+              <button class="btn btn-primary" onclick="submitReport()">📤 ส่งรายงาน</button>
+              <button class="btn btn-outline" onclick="showToast('📞 กำลังโทรหาหัวหน้างาน...')">📞 โทรหาหัวหน้าด่วน</button>
+            </div>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-header"><div class="card-title">📋 ประวัติการรายงานปัญหา</div></div>
+          <table>
+            <thead><tr><th>วันที่</th><th>ประเภท</th><th>ออเดอร์</th><th>รายละเอียด</th><th>สถานะ</th></tr></thead>
+            <tbody>
+              <tr><td>01/03/2025</td><td>📵 ผู้รับไม่รับสาย</td><td>ORD-20250301-010</td><td>โทร 3 ครั้งไม่รับ</td><td><span class="badge badge-success">✅ แก้ไขแล้ว</span></td></tr>
+              <tr><td>28/02/2025</td><td>🏠 หาที่อยู่ไม่พบ</td><td>ORD-20250228-033</td><td>GPS พาไปผิดซอย</td><td><span class="badge badge-success">✅ แก้ไขแล้ว</span></td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- NOTIFICATIONS -->
+      <div class="section" id="sec-notifications">
+        <div class="card">
+          <div class="card-header">
+            <div class="card-title">🔔 การแจ้งเตือนทั้งหมด</div>
+            <button class="btn btn-outline btn-sm" onclick="markAllRead()">✅ อ่านทั้งหมด</button>
+          </div>
+          <div id="notifList" style="padding:8px 0;"></div>
+        </div>
+      </div>
+
+      <!-- UPLOAD DELIVERY PROOF -->
+      <div class="section" id="sec-upload">
+        <div class="card" style="margin-bottom:20px">
+          <div class="card-header"><div class="card-title">📸 อัปโหลดรูปยืนยันการส่งสินค้า</div></div>
+          <div style="padding:24px;display:grid;gap:16px;">
+            <div class="form-group">
+              <label>เลขออเดอร์</label>
+              <select id="uploadOrder" style="width:100%;padding:11px 14px;border:1.5px solid var(--border);border-radius:8px;font-size:14px;outline:none;">
+                <option value="">-- เลือกออเดอร์ --</option>
+                <option>ORD-20250302-001 – คุณสมหญิง แสนดี</option>
+                <option>ORD-20250302-002 – คุณวิชัย มั่นคง</option>
+                <option>ORD-20250301-015 – คุณธนา รักษ์ดี</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label>ประเภทหลักฐาน</label>
+              <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:6px;">
+                <label style="display:flex;align-items:center;gap:6px;cursor:pointer;"><input type="radio" name="proofType" value="sign" checked> ✍️ ลายเซ็นผู้รับ</label>
+                <label style="display:flex;align-items:center;gap:6px;cursor:pointer;"><input type="radio" name="proofType" value="photo"> 📦 ถ่ายรูปพัสดุ</label>
+                <label style="display:flex;align-items:center;gap:6px;cursor:pointer;"><input type="radio" name="proofType" value="door"> 🚪 วางหน้าประตู</label>
+              </div>
+            </div>
+            <div class="form-group">
+              <label>เลือกรูปภาพ</label>
+              <div id="uploadZone" onclick="triggerUpload()" style="border:2px dashed var(--border);border-radius:12px;padding:40px;text-align:center;cursor:pointer;transition:all 0.2s;background:#fafbfc;">
+                <div style="font-size:40px;margin-bottom:10px;">📷</div>
+                <div style="font-size:14px;font-weight:600;color:var(--primary);">แตะเพื่อเลือกรูปหรือถ่ายภาพ</div>
+                <div style="font-size:12px;color:var(--muted);margin-top:4px;">รองรับ JPG, PNG ขนาดไม่เกิน 10MB</div>
+              </div>
+              <input type="file" id="fileInput" accept="image/*" style="display:none" onchange="previewImage(event)">
+            </div>
+            <div id="imgPreview" style="display:none;">
+              <div style="position:relative;display:inline-block;">
+                <img id="previewImg" style="max-width:300px;max-height:200px;border-radius:10px;border:2px solid var(--border);">
+                <button onclick="clearPreview()" style="position:absolute;top:-8px;right:-8px;background:var(--accent);color:white;border:none;border-radius:50%;width:24px;height:24px;cursor:pointer;font-size:14px;">×</button>
+              </div>
+            </div>
+            <div class="form-group">
+              <label>หมายเหตุ (ถ้ามี)</label>
+              <input type="text" placeholder="เช่น วางไว้หน้าประตู ผู้รับไม่อยู่" style="width:100%;padding:11px 14px;border:1.5px solid var(--border);border-radius:8px;font-size:14px;outline:none;"/>
+            </div>
+            <button class="btn btn-success" style="max-width:200px" onclick="submitProof()">📤 ยืนยันการส่ง</button>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-header"><div class="card-title">📋 ประวัติการอัปโหลดรูป</div></div>
+          <table>
+            <thead><tr><th>เลขออเดอร์</th><th>ผู้รับ</th><th>ประเภท</th><th>เวลา</th><th>สถานะ</th></tr></thead>
+            <tbody>
+              <tr><td>ORD-20250302-003</td><td>คุณพรรณี สุขใจ</td><td>✍️ ลายเซ็น</td><td>02/03 10:32</td><td><span class="badge badge-success">✅ อัปโหลดแล้ว</span></td></tr>
+              <tr><td>ORD-20250301-010</td><td>คุณมาลี ดีใจ</td><td>📦 รูปพัสดุ</td><td>01/03 15:47</td><td><span class="badge badge-success">✅ อัปโหลดแล้ว</span></td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
     </div>
   </div>
 </div>
@@ -502,7 +700,7 @@ function doLogout() {
 }
 
 // NAV
-const titles = { dashboard:'Dashboard', orders:'ออเดอร์', delivery:'การจัดส่ง', pos:'POS ขายหน้าร้าน' };
+const titles = { dashboard:'Dashboard', orders:'ออเดอร์', delivery:'การจัดส่ง', pos:'POS ขายหน้าร้าน', schedule:'ตารางงาน/เวร', gps:'GPS ติดตามรถ', report:'รายงานปัญหา', notifications:'การแจ้งเตือน', upload:'อัปโหลดรูปยืนยันการส่ง' };
 function showSection(id, el) {
   document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
   document.getElementById('sec-'+id).classList.add('active');
@@ -645,6 +843,90 @@ function showToast(msg) {
   t.classList.add('show');
   tt = setTimeout(() => t.classList.remove('show'), 2800);
 }
+
+// SCHEDULE / GPS / REPORT / NOTIFICATIONS / UPLOAD
+
+const NOTIFICATIONS = [
+  { id:1, icon:'📦', title:'ออเดอร์ใหม่เข้ามา', msg:'ORD-20250303-005 – คุณอรุณ สดใส รอรับสินค้า', time:'5 นาทีที่แล้ว', read:false },
+  { id:2, icon:'⚠️', title:'แจ้งเตือนเส้นทาง', msg:'ถนนสุขุมวิทมีการจราจรหนาแน่น แนะนำเปลี่ยนเส้นทาง', time:'18 นาทีที่แล้ว', read:false },
+  { id:3, icon:'✅', title:'ออเดอร์ได้รับการยืนยัน', msg:'ORD-20250302-003 ยืนยันการส่งสำเร็จแล้ว', time:'1 ชั่วโมงที่แล้ว', read:false },
+  { id:4, icon:'📅', title:'เตือนเวรพรุ่งนี้', msg:'คุณมีเวรพรุ่งนี้ 08:00 – 17:00 เส้นทางปริมณฑล', time:'3 ชั่วโมงที่แล้ว', read:true },
+  { id:5, icon:'🎉', title:'ยินดีด้วย!', msg:'คุณส่งสินค้าครบ 100 ชิ้นในเดือนนี้', time:'เมื่อวาน', read:true },
+];
+
+function renderNotifications() {
+  const list = document.getElementById('notifList');
+  if (!list) return;
+  list.innerHTML = NOTIFICATIONS.map(n => `
+    <div onclick="readNotif(${n.id})" style="padding:16px 20px;border-bottom:1px solid var(--border);display:flex;gap:14px;align-items:flex-start;cursor:pointer;background:${n.read ? 'white' : '#f0f5ff'};transition:background 0.2s;">
+      <div style="font-size:28px;flex-shrink:0">${n.icon}</div>
+      <div style="flex:1">
+        <div style="font-size:14px;font-weight:${n.read ? 600 : 700};color:var(--primary)">${n.title}</div>
+        <div style="font-size:13px;color:var(--muted);margin-top:2px">${n.msg}</div>
+        <div style="font-size:11px;color:#aaa;margin-top:4px">${n.time}</div>
+      </div>
+      ${!n.read ? '<div style="width:10px;height:10px;background:var(--accent);border-radius:50%;margin-top:4px;flex-shrink:0"></div>' : ''}
+    </div>`).join('');
+  const unread = NOTIFICATIONS.filter(n => !n.read).length;
+  document.getElementById('badgeNotif').textContent = unread;
+  if (!unread) document.getElementById('badgeNotif').style.display = 'none';
+  else document.getElementById('badgeNotif').style.display = '';
+}
+
+function readNotif(id) {
+  const n = NOTIFICATIONS.find(x => x.id===id);
+  if (n) { n.read = true; renderNotifications(); }
+}
+
+function markAllRead() {
+  NOTIFICATIONS.forEach(n => n.read = true);
+  renderNotifications();
+  showToast('✅ อ่านการแจ้งเตือนทั้งหมดแล้ว');
+}
+
+function submitReport() {
+  const type = document.getElementById('reportType').value;
+  if (!type) { showToast('⚠️ กรุณาเลือกประเภทปัญหา'); return; }
+  showToast('📤 ส่งรายงานปัญหาแล้ว หัวหน้างานจะติดต่อกลับเร็วๆ นี้');
+  document.getElementById('reportType').value = '';
+  document.getElementById('reportOrder').value = '';
+  document.getElementById('reportDetail').value = '';
+}
+
+function triggerUpload() { document.getElementById('fileInput').click(); }
+
+function previewImage(event) {
+  const file = event.target.files[0];
+  if (!file) return;
+  const reader = new FileReader();
+  reader.onload = e => {
+    document.getElementById('previewImg').src = e.target.result;
+    document.getElementById('imgPreview').style.display = 'block';
+    document.getElementById('uploadZone').style.borderColor = 'var(--success)';
+  };
+  reader.readAsDataURL(file);
+}
+
+function clearPreview() {
+  document.getElementById('imgPreview').style.display = 'none';
+  document.getElementById('fileInput').value = '';
+  document.getElementById('uploadZone').style.borderColor = '';
+}
+
+function submitProof() {
+  const order = document.getElementById('uploadOrder').value;
+  if (!order) { showToast('⚠️ กรุณาเลือกเลขออเดอร์'); return; }
+  showToast('✅ อัปโหลดหลักฐานการส่งสำเร็จ!');
+  clearPreview();
+  document.getElementById('uploadOrder').value = '';
+}
+
+// Animate GPS trucks
+const style = document.createElement('style');
+style.textContent = `@keyframes pulse { 0%,100%{transform:scale(1)} 50%{transform:scale(1.15)} }`;
+document.head.appendChild(style);
+
+renderNotifications();
 </script>
 </body>
 </html>
